@@ -11,7 +11,6 @@
 //    int dst=0;
 //    int weight=0;
 //};
-
 vector<int> dijkstra_shortest_path(const Graph& G, int source, vector<int>& previous)
 {
     int size = G.numVertices;
@@ -21,15 +20,14 @@ vector<int> dijkstra_shortest_path(const Graph& G, int source, vector<int>& prev
     previous.resize(size, -1);
     visited.resize(size, false);
 
-    priority_queue<int> pq{};
-    pq.push(source);
+    priority_queue<Node> pq{};
+    pq.push(Node{source, 0});
     distance[source] = 0; //Distance from source to itself is 0
 
     while(!pq.empty())
     {
-        int current = pq.top(); pq.pop();
-        
-        int u = current;
+        int u = pq.top().vertex; pq.pop();
+
         if(visited[u])
             continue;
         visited[u] = true;
@@ -39,11 +37,11 @@ vector<int> dijkstra_shortest_path(const Graph& G, int source, vector<int>& prev
             int v = neighbor.dst;
             int weight = neighbor.weight;
 
-            if(!visited[v] && distance[u] + weight <= distance[v])
+            if(!visited[v] && distance[u] + weight < distance[v])
             {
                 distance[v] = distance[u] + weight;
                 previous[v] = u;
-                pq.push(v);
+                pq.push(Node{v, distance[v]});
             }
         }
     }

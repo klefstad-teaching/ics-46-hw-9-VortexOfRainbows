@@ -25,6 +25,36 @@ struct Edge {
     }
 };
 
+struct Node {
+    int vertex;
+    int dist = INF;
+    bool operator == (Node const & other) const
+    {
+        return this->dist == other.dist;
+    }
+    bool operator != (Node const & other) const
+    {
+        return this->dist != other.dist;
+    }
+    bool operator > (Node const & other) const
+    {
+        return this->dist > other.dist;
+    }
+    bool operator < (Node const & other) const
+    {
+        return this->dist < other.dist;
+    }
+    bool operator >= (Node const & other) const
+    {
+        return this->dist >= other.dist;
+    }
+    bool operator <= (Node const & other) const
+    {
+        return this->dist <= other.dist;
+    }
+};
+
+
 struct Graph : public vector<vector<Edge>> {
     int numVertices=0;
 };
