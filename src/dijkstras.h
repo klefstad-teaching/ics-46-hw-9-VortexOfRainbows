@@ -38,19 +38,19 @@ struct Node {
     }
     bool operator > (Node const & other) const
     {
-        return this->dist > other.dist;
+        return this->dist < other.dist;
     }
     bool operator < (Node const & other) const
     {
-        return this->dist < other.dist;
+        return this->dist > other.dist;
     }
     bool operator >= (Node const & other) const
     {
-        return this->dist >= other.dist;
+        return this->dist <= other.dist;
     }
     bool operator <= (Node const & other) const
     {
-        return this->dist <= other.dist;
+        return this->dist >= other.dist;
     }
 };
 
