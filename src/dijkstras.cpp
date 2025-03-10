@@ -54,7 +54,15 @@ vector<int> extract_shortest_path(const vector<int>& distances,
  const vector<int>& previous, 
  int destination)
 {
-    
+    vector<int> path{};
+    int end = destination;
+    path.push_back(end);
+    while(previous[end] != -1)
+    {
+        end = previous[end];
+        path.push_back(end);
+    }
+    return path;
 }
 void print_path(const vector<int>& v, int total)
 {
