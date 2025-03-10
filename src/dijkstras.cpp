@@ -56,11 +56,16 @@ vector<int> extract_shortest_path(const vector<int>& distances,
 {
     vector<int> path{};
     int end = destination;
-    path.insert(path.begin(), end);
+    path.push_back(end);
     while(previous[end] != -1)
     {
         end = previous[end];
-        path.insert(path.begin(), end);
+        path.push_back(end);
+    }
+    int half = path.size() / 2;
+    for(int i = 0; i < half; ++i)
+    {
+        std::swap(path[i], path[path.size() - 1 - i]);
     }
     return path;
 }
