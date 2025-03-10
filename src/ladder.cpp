@@ -12,7 +12,7 @@ using namespace std;
 
 void error(string word1, string word2, string msg)
 {
-
+    cout << "Error: (" << word1 << ", " << word2 << ") " << msg;
 }
 bool edit_distance_within(const std::string& str1, const std::string& str2, int d)
 {
@@ -28,11 +28,17 @@ vector<string> generate_word_ladder(const string& begin_word, const string& end_
 }
 void load_words(set<string> & word_list, const string& file_name)
 {
-    
+    word_list.clear();
+    ifstream in(file_name);
+    for(string word; (in >> word);)
+        word_list.insert(word);
+    in.close();
 }
 void print_word_ladder(const vector<string>& ladder)
 {
-    
+    for(auto str : ladder)
+        cout << str << ' ';
+    cout << endl;
 }
 void verify_word_ladder()
 {
