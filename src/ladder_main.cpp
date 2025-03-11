@@ -22,6 +22,9 @@ void test()
     assert(!is_adjacent("cat", "Al"));
     assert(!is_adjacent("cat", "dog"));
 
+    assert(!is_adjacent("sleep", "leek"));
+    assert(is_adjacent("sleep", "leep"));
+
     cout << "made it past adjacent tests" << endl;
     verify_word_ladder();
 }

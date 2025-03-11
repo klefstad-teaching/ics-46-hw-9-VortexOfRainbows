@@ -48,6 +48,7 @@ bool is_adjacent(const string& word1, const string& word2)
             if(char1 != char2)
             {
                 ++differencesCount;
+                ++smaller;
             }
             if(differencesCount > 1)
                 return false;
@@ -128,21 +129,22 @@ void print_word_ladder(const vector<string>& ladder)
         cout << str << ' ';
     cout << endl;
 }
-void verify_word_ladder()
+void TestAndPrint(const string& begin_word, const string& end_word, const set<string>& word_list, int size)
 {
     #define my_assert(e) {cout << #e << ((e) ? " passed": " failed") << endl;}
+    auto x = generate_word_ladder(begin_word, end_word, word_list);
+    my_assert(x.size() == size);
+    print_word_ladder(x);
+}
+
+void verify_word_ladder()
+{
     set<string> word_list;
     load_words(word_list, "src/words.txt");
-    auto x = generate_word_ladder("cat", "dog", word_list);
-    my_assert(x.size() == 4);
-    print_word_ladder(x);
-    //my_assert(generate_word_ladder("marty", "curls", word_list).size() == 6);
-    //my_assert(generate_word_ladder("code", "data", word_list).size() == 6);
-    //my_assert(generate_word_ladder("work", "play", word_list).size() == 6);
-    //my_assert(generate_word_ladder("sleep", "awake", word_list).size() == 8);
-    //my_assert(generate_word_ladder("car", "cheat", word_list).size() == 4);
-}
-void testAndPrint()
-{
-    
+    TestAndPrint("cat", "dog", word_list, 4) ;
+    TestAndPrint("marty", "curls", word_list, 6);
+    TestAndPrint("code", "data", word_list, 6);
+    TestAndPrint("work", "play", word_list, 6);
+    TestAndPrint("sleep", "awake", word_list, 8);
+    TestAndPrint("car", "cheat", word_list, 4);
 }
