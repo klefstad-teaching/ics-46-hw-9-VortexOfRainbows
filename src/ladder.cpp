@@ -19,53 +19,26 @@ void error(string word1, string word2, string msg)
 }
 bool edit_distance_within(const std::string& str1, const std::string& str2, int d)
 {
-    int differencesCount = 0;
     int length1 = str1.size();
     int length2 = str2.size();
-
-    if(length1 != length2) //different word lengths
+    int smaller = min(length1, length2);
+    int differencesCount = abs(length1 - length2);
+    if(length1 == 0 || length2 == 0)
+        return differencesCount <= d;
+    char prev1 = str1[0];
+    char prev2 = str1[0];
+    for(int i = 0; i < length1; ++i)
     {
-        bool firstIsSmaller = true;
-        int smaller = length1;
-        if(length1 > length2)
+        char curr1 = str1[i];
+        char curr2 = str2[i];
+        if(curr1 != curr2 && prev1 != curr2 && prev2 != curr1)
         {
-            smaller = length2;
-            firstIsSmaller = false;
+            differencesCount++;
         }
-        char char1 = str1[0];
-        char char2 = str2[0];
-        for(int i = 1; i <= smaller; ++i)
-        {
-            if(char1 != char2)
-            {
-                ++differencesCount;
-                ++smaller;
-            }
-            if(i >= smaller)
-                break;
-            if(firstIsSmaller)
-            {
-                char1 = str1[i - differencesCount];
-                char2 = str2[i];
-            }
-            else 
-            {
-                char1 = str1[i];
-                char2 = str2[i - differencesCount];
-            }
-        }
+        prev1 = curr1;
+        prev2 = curr2;
     }
-    else 
-    {
-        for(int i = 0; i < length1; ++i)
-        {
-            if(str1[i] != str2[i])
-                ++differencesCount;
-            if(differencesCount > d)
-                return false;
-        }
-    }
-    return differencesCount < d;
+    return differencesCount <= d;
 }
 bool is_adjacent(const string& word1, const string& word2)
 {
@@ -131,8 +104,7 @@ vector<string> generate_word_ladder(const string& begin_word, const string& end_
 {
     if(end_word == begin_word)
     {
-        vector<string> ladder2{begin_word};
-        return ladder2;
+        return {};
     }
     queue<vector<string>> ladder_queue{};
     ladder_queue.push({begin_word});
@@ -160,7 +132,7 @@ vector<string> generate_word_ladder(const string& begin_word, const string& end_
             }
         }
     }
-    return {"No word ladder found."};
+    return {};
 }
 void load_words(set<string> & word_list, const string& file_name)
 {
@@ -172,6 +144,7 @@ void load_words(set<string> & word_list, const string& file_name)
 }
 void print_word_ladder(const vector<string>& ladder)
 {
+    cout << (ladder.size() > 0 ? "Word ladder found: " : "No word ladder found.");
     for(auto str : ladder)
         cout << str << ' ';
     cout << endl;
