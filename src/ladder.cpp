@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <cstdlib>
 #include <endian.h>
 #include <iostream>
 #include <fstream>
@@ -18,7 +19,53 @@ void error(string word1, string word2, string msg)
 }
 bool edit_distance_within(const std::string& str1, const std::string& str2, int d)
 {
-    return true;
+    int differencesCount = 0;
+    int length1 = str1.size();
+    int length2 = str2.size();
+
+    if(length1 != length2) //different word lengths
+    {
+        bool firstIsSmaller = true;
+        int smaller = length1;
+        if(length1 > length2)
+        {
+            smaller = length2;
+            firstIsSmaller = false;
+        }
+        char char1 = str1[0];
+        char char2 = str2[0];
+        for(int i = 1; i <= smaller; ++i)
+        {
+            if(char1 != char2)
+            {
+                ++differencesCount;
+                ++smaller;
+            }
+            if(i >= smaller)
+                break;
+            if(firstIsSmaller)
+            {
+                char1 = str1[i - differencesCount];
+                char2 = str2[i];
+            }
+            else 
+            {
+                char1 = str1[i];
+                char2 = str2[i - differencesCount];
+            }
+        }
+    }
+    else 
+    {
+        for(int i = 0; i < length1; ++i)
+        {
+            if(str1[i] != str2[i])
+                ++differencesCount;
+            if(differencesCount > d)
+                return false;
+        }
+    }
+    return differencesCount < d;
 }
 bool is_adjacent(const string& word1, const string& word2)
 {
@@ -113,7 +160,7 @@ vector<string> generate_word_ladder(const string& begin_word, const string& end_
             }
         }
     }
-    return {};
+    return {"No word ladder found."};
 }
 void load_words(set<string> & word_list, const string& file_name)
 {
@@ -136,7 +183,6 @@ void TestAndPrint(const string& begin_word, const string& end_word, const set<st
     my_assert(x.size() == size);
     print_word_ladder(x);
 }
-
 void verify_word_ladder()
 {
     set<string> word_list;
