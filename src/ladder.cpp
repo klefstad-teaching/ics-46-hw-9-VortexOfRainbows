@@ -103,10 +103,11 @@ vector<string> generate_word_ladder(const string& begin_word, const string& end_
                 if(visited.find(word) == visited.end())
                 {
                     visited.insert(word);
-                    ladder.push_back(word);
+                    vector<string> newLadder = vector<string>{ladder};
+                    newLadder.push_back(word);
                     if(word == end_word)
-                        return ladder;
-                    ladder_queue.push(ladder);
+                        return newLadder;
+                    ladder_queue.push(newLadder);
                 }
             }
         }
@@ -132,11 +133,16 @@ void verify_word_ladder()
     #define my_assert(e) {cout << #e << ((e) ? " passed": " failed") << endl;}
     set<string> word_list;
     load_words(word_list, "src/words.txt");
-    my_assert(generate_word_ladder("cat", "dog", word_list).size() == 4);
-    print_word_ladder(generate_word_ladder("cat", "dog", word_list));
+    auto x = generate_word_ladder("cat", "dog", word_list);
+    my_assert(x.size() == 4);
+    print_word_ladder(x);
     //my_assert(generate_word_ladder("marty", "curls", word_list).size() == 6);
     //my_assert(generate_word_ladder("code", "data", word_list).size() == 6);
     //my_assert(generate_word_ladder("work", "play", word_list).size() == 6);
     //my_assert(generate_word_ladder("sleep", "awake", word_list).size() == 8);
     //my_assert(generate_word_ladder("car", "cheat", word_list).size() == 4);
+}
+void testAndPrint()
+{
+    
 }
