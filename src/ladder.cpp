@@ -27,7 +27,7 @@ bool edit_distance_within(const std::string& str1, const std::string& str2, int 
         return differencesCount <= d;
     char prev1 = str1[0];
     char prev2 = str1[0];
-    for(int i = 0; i < length1; ++i)
+    for(int i = 0; i < smaller; ++i)
     {
         char curr1 = str1[i];
         char curr2 = str2[i];
